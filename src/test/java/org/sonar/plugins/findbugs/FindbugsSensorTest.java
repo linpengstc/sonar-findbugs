@@ -113,7 +113,7 @@ public class FindbugsSensorTest extends FindbugsTests {
 
     BugInstance bugInstance = getBugInstance("AM_CREATES_EMPTY_ZIP_FILE_ENTRY", 6);
     Collection<ReportedBug> collection = Arrays.asList(new ReportedBug(bugInstance));
-    when(executor.execute(false, false)).thenReturn(collection);
+    when(executor.execute(false, false,false)).thenReturn(collection);
     JavaResourceLocator javaResourceLocator = mockJavaResourceLocator();
     when(javaResourceLocator.classFilesToAnalyze()).thenReturn(Lists.newArrayList(new File("file")));
 
@@ -121,7 +121,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor sensor = pico.getComponent(FindbugsSensor.class);
     sensor.execute(sensorContext);
 
-    verify(executor).execute(false, false);
+    verify(executor).execute(false, false,false);
     verify(sensorContext, times(1)).newIssue();
   }
 
@@ -130,7 +130,7 @@ public class FindbugsSensorTest extends FindbugsTests {
 
     BugInstance bugInstance = getBugInstance("AM_CREATES_EMPTY_ZIP_FILE_ENTRY", 13);
     Collection<ReportedBug> collection = Arrays.asList(new ReportedBug(bugInstance));
-    when(executor.execute(false, false)).thenReturn(collection);
+    when(executor.execute(false, false,false)).thenReturn(collection);
 
     when(javaResourceLocator.findResourceByClassName(anyString())).thenReturn(null);
     when(fs.inputFiles(any(FilePredicate.class))).thenReturn(new ArrayList<InputFile>());
@@ -140,7 +140,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor analyser = pico.getComponent(FindbugsSensor.class);
     analyser.execute(sensorContext);
 
-    verify(executor).execute(false, false);
+    verify(executor).execute(false, false,false);
     verify(sensorContext, never()).newIssue();
   }
 
@@ -150,7 +150,7 @@ public class FindbugsSensorTest extends FindbugsTests {
 
     BugInstance bugInstance = getBugInstance("ISB_INEFFICIENT_STRING_BUFFERING", 49);
     Collection<ReportedBug> collection = Arrays.asList(new ReportedBug(bugInstance));
-    when(executor.execute(true, false)).thenReturn(collection);
+    when(executor.execute(true, false,false)).thenReturn(collection);
     JavaResourceLocator javaResourceLocator = mockJavaResourceLocator();
     when(javaResourceLocator.classFilesToAnalyze()).thenReturn(Lists.newArrayList(new File("file")));
 
@@ -159,7 +159,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor analyser = pico.getComponent(FindbugsSensor.class);
     analyser.execute(sensorContext);
 
-    verify(executor).execute(true, false);
+    verify(executor).execute(true, false,false);
     verify(sensorContext, times(1)).newIssue();
   }
 
@@ -168,7 +168,7 @@ public class FindbugsSensorTest extends FindbugsTests {
 
     BugInstance bugInstance = getBugInstance("PREDICTABLE_RANDOM", 0);
     Collection<ReportedBug> collection = Arrays.asList(new ReportedBug(bugInstance));
-    when(executor.execute(false, true)).thenReturn(collection);
+    when(executor.execute(false, true,false)).thenReturn(collection);
 
     when(javaResourceLocator.classFilesToAnalyze()).thenReturn(Lists.newArrayList(new File("file")));
 
@@ -177,7 +177,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor analyser = pico.getComponent(FindbugsSensor.class);
     analyser.execute(sensorContext);
 
-    verify(executor).execute(false, true);
+    verify(executor).execute(false, true,false);
     verify(sensorContext, times(1)).newIssue();
   }
 
@@ -186,7 +186,7 @@ public class FindbugsSensorTest extends FindbugsTests {
 
     BugInstance bugInstance = getBugInstance("THIS_RULE_DOES_NOT_EXIST", 107);
     Collection<ReportedBug> collection = Arrays.asList(new ReportedBug(bugInstance));
-    when(executor.execute(false, false)).thenReturn(collection);
+    when(executor.execute(false, false, false)).thenReturn(collection);
 
     when(javaResourceLocator.classFilesToAnalyze()).thenReturn(Lists.newArrayList(new File("file")));
 
@@ -195,7 +195,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor analyser = pico.getComponent(FindbugsSensor.class);
     analyser.execute(sensorContext);
 
-    verify(executor).execute(false, false);
+    verify(executor).execute(false, false,false);
     verify(sensorContext, never()).newIssue();
   }
 
@@ -209,7 +209,7 @@ public class FindbugsSensorTest extends FindbugsTests {
     FindbugsSensor analyser = pico.getComponent(FindbugsSensor.class);
     analyser.execute(sensorContext);
 
-    verify(executor, never()).execute(false, false);
+    verify(executor, never()).execute(false, false,false);
     verify(sensorContext, never()).newIssue();
   }
 

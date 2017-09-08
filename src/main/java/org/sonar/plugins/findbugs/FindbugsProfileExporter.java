@@ -25,11 +25,8 @@ import org.sonar.api.profiles.ProfileExporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.ActiveRule;
 import org.sonar.api.utils.SonarException;
-import org.sonar.plugins.findbugs.rules.FbContribRulesDefinition;
+import org.sonar.plugins.findbugs.rules.*;
 import org.sonar.plugins.findbugs.language.Jsp;
-import org.sonar.plugins.findbugs.rules.FindSecurityBugsJspRulesDefinition;
-import org.sonar.plugins.findbugs.rules.FindSecurityBugsRulesDefinition;
-import org.sonar.plugins.findbugs.rules.FindbugsRulesDefinition;
 import org.sonar.plugins.findbugs.xml.Bug;
 import org.sonar.plugins.findbugs.xml.FindBugsFilter;
 import org.sonar.plugins.findbugs.xml.Match;
@@ -53,7 +50,8 @@ public class FindbugsProfileExporter extends ProfileExporter {
         profile.getActiveRulesByRepository(FindbugsRulesDefinition.REPOSITORY_KEY),
         profile.getActiveRulesByRepository(FbContribRulesDefinition.REPOSITORY_KEY),
         profile.getActiveRulesByRepository(FindSecurityBugsRulesDefinition.REPOSITORY_KEY),
-        profile.getActiveRulesByRepository(FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY)
+        profile.getActiveRulesByRepository(FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY),
+        profile.getActiveRulesByRepository(LpSecurityRulesDefinition.REPOSITORY_KEY)
         ));
       XStream xstream = FindBugsFilter.createXStream();
       writer.append(xstream.toXML(filter));
@@ -70,7 +68,8 @@ public class FindbugsProfileExporter extends ProfileExporter {
       if (FindbugsRulesDefinition.REPOSITORY_KEY.equals(repoKey) ||
         FbContribRulesDefinition.REPOSITORY_KEY.equals(repoKey) ||
         FindSecurityBugsRulesDefinition.REPOSITORY_KEY.equals(repoKey) ||
-        FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY.equals(repoKey)) {
+        FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY.equals(repoKey)||
+        LpSecurityRulesDefinition.REPOSITORY_KEY.equals(repoKey)){
         Match child = new Match();
         child.setBug(new Bug(activeRule.getConfigKey()));
         root.addMatch(child);

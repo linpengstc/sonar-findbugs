@@ -128,6 +128,9 @@
     <Bug pattern="DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED"/>
   </Match>
   <Match>
+    <Bug pattern="RICO_FORBID_SYSTEM_OUT"/>
+  </Match>
+  <Match>
     <Bug pattern="CO_SELF_NO_OBJECT"/>
   </Match>
   <Match>

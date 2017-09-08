@@ -96,10 +96,10 @@ public class FindbugsExecutor {
   }
 
   public Collection<ReportedBug> execute(boolean useAllPlugin) {
-    return execute(useAllPlugin,useAllPlugin);
+    return execute(useAllPlugin,useAllPlugin,useAllPlugin);
   }
 
-  public Collection<ReportedBug> execute(boolean useFbContrib, boolean useFindSecBugs) {
+  public Collection<ReportedBug> execute(boolean useFbContrib, boolean useFindSecBugs, boolean uselpSec) {
     // We keep a handle on the current security manager because FB plays with it and we need to restore it before shutting down the executor
     // service
     SecurityManager currentSecurityManager = System.getSecurityManager();
@@ -123,7 +123,7 @@ public class FindbugsExecutor {
         return new ArrayList<>();
       }
 
-      customPlugins = loadFindbugsPlugins(useFbContrib,useFindSecBugs);
+      customPlugins = loadFindbugsPlugins(useFbContrib,useFindSecBugs, uselpSec);
 
       disableUpdateChecksOnEveryPlugin();
 
@@ -223,7 +223,7 @@ public class FindbugsExecutor {
     }
   }
 
-  private Collection<Plugin> loadFindbugsPlugins(boolean useFbContrib,boolean useFindSecBugs) {
+  private Collection<Plugin> loadFindbugsPlugins(boolean useFbContrib,boolean useFindSecBugs, boolean uselpSec) {
     ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
     List<String> pluginJarPathList = Lists.newArrayList();
@@ -241,6 +241,10 @@ public class FindbugsExecutor {
       //Add find-sec-bugs plugin. (same as fb-contrib)
       if (useFindSecBugs && configuration.getFindSecBugsJar() != null) {
         pluginJarPathList.add(configuration.getFindSecBugsJar().getAbsolutePath());
+      }
+
+      if (uselpSec && configuration.getLpSecBugsJar() != null) {
+        pluginJarPathList.add(configuration.getLpSecBugsJar().getAbsolutePath());
       }
     } catch (IOException e) {
       throw new IllegalStateException(e);

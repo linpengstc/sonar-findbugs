@@ -23,6 +23,9 @@ import org.junit.Test;
 import org.sonar.api.Plugin;
 import org.sonar.api.utils.Version;
 
+import java.io.*;
+import java.net.URL;
+
 import static junit.framework.TestCase.assertEquals;
 
 public class FindbugsPluginTest {
@@ -31,11 +34,24 @@ public class FindbugsPluginTest {
   public void testGetExtensions() {
 
     Plugin.Context ctx = new FindbugsPlugin.Context(Version.parse("1.33.7"));
-
+    String classFilePath = this.getClass().getName().replaceAll("\\.", "/") + ".class";
+    System.out.println(classFilePath);
+    URL recource = this.getClass().getClassLoader().getResource(classFilePath);
+//    System.out.println();
+    System.out.println(recource.getPath().replace(classFilePath,""));
+    String p = recource.getPath().replace(classFilePath,"");
+    File f = new File( p, "../sonar-findbugs-plugin.jar" );
+    System.out.println(f.toPath());
+    try {
+      FileInputStream fo = new FileInputStream(f);
+      System.out.println(fo.read());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     FindbugsPlugin plugin = new FindbugsPlugin();
     plugin.define(ctx);
 
-    assertEquals("extension count", 21, ctx.getExtensions().size());
+    assertEquals("extension count", 23, ctx.getExtensions().size());
   }
 
 }

@@ -1,0 +1,11 @@
+<rules><!-- This file is auto-generated. -->
+    <rule key='RICO_FORBID_SYSTEM_OUT' priority='CRITICAL'>
+        <name>RICO_FORBID_SYSTEM_OUT - RICO_FORBID_SYSTEM_OUT</name>
+        <configKey>RICO_FORBID_SYSTEM_OUT</configKey>
+        <description>&lt;p&gt;
+            xxxxxxxxxxxxxxxxxxxxx
+            &lt;/p&gt;</description>
+        <tag>cwe</tag>
+        <tag>security</tag>
+    </rule>
+</rules>

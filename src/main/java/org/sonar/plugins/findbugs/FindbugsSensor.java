@@ -38,10 +38,7 @@ import org.sonar.plugins.findbugs.language.Jsp;
 import org.sonar.plugins.findbugs.resource.ByteCodeResourceLocator;
 import org.sonar.plugins.findbugs.resource.ClassMetadataLoadingException;
 import org.sonar.plugins.findbugs.resource.SmapParser;
-import org.sonar.plugins.findbugs.rules.FbContribRulesDefinition;
-import org.sonar.plugins.findbugs.rules.FindSecurityBugsJspRulesDefinition;
-import org.sonar.plugins.findbugs.rules.FindSecurityBugsRulesDefinition;
-import org.sonar.plugins.findbugs.rules.FindbugsRulesDefinition;
+import org.sonar.plugins.findbugs.rules.*;
 import org.sonar.plugins.java.Java;
 import org.sonar.plugins.java.api.JavaResourceLocator;
 
@@ -50,7 +47,7 @@ public class FindbugsSensor implements Sensor {
   private static final Logger LOG = LoggerFactory.getLogger(FindbugsSensor.class);
 
   public static final String[] REPOS = {FindbugsRulesDefinition.REPOSITORY_KEY, FbContribRulesDefinition.REPOSITORY_KEY,
-          FindSecurityBugsRulesDefinition.REPOSITORY_KEY, FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY};
+          FindSecurityBugsRulesDefinition.REPOSITORY_KEY, FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY, LpSecurityRulesDefinition.REPOSITORY_KEY};
 
   private RulesProfile profile;
   private ActiveRules ruleFinder;
@@ -87,13 +84,17 @@ public class FindbugsSensor implements Sensor {
     return !profile.getActiveRulesByRepository(FindSecurityBugsJspRulesDefinition.REPOSITORY_KEY).isEmpty();
   }
 
+  private boolean hasActiveLpSecRules(){
+    return !profile.getActiveRulesByRepository(LpSecurityRulesDefinition.REPOSITORY_KEY).isEmpty();
+  }
+
   @Override
   public void execute(SensorContext context) {
-    if(!hasActiveFindbugsRules() && !hasActiveFbContribRules() && !hasActiveFindSecBugsRules() && !hasActiveFindSecBugsJspRules()){
+    if(!hasActiveFindbugsRules() && !hasActiveFbContribRules() && !hasActiveFindSecBugsRules() && !hasActiveFindSecBugsJspRules()&&!hasActiveLpSecRules()){
       return;
     }
 
-    Collection<ReportedBug> collection = executor.execute(hasActiveFbContribRules(), hasActiveFindSecBugsRules() || hasActiveFindSecBugsJspRules());
+    Collection<ReportedBug> collection = executor.execute(hasActiveFbContribRules(), hasActiveFindSecBugsRules() || hasActiveFindSecBugsJspRules(), hasActiveLpSecRules());
 
     for (ReportedBug bugInstance : collection) {
 

@@ -63,6 +63,13 @@
     !!! ORDER OF DEPENDENCIES IS IMPORTANT !!!
     FindBugs should be first
     -->
+    <!--<dependency>-->
+      <!--<groupId>com.linpeng</groupId>-->
+      <!--<artifactId>test</artifactId>-->
+      <!--<version>1.0</version>-->
+      <!--<scope>system</scope>-->
+      <!--<systemPath>${project.basedir}/lib/lp-sec-plugin.jar</systemPath>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>com.github.spotbugs</groupId>
@@ -80,7 +87,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    
+
 
     <dependency>
       <groupId>org.sonarsource.sslr-squid-bridge</groupId>
@@ -230,6 +237,8 @@
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
       </resource>
+
+
     </resources>
 
     <testResources>

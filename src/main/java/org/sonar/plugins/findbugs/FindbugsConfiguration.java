@@ -235,6 +235,7 @@ public class FindbugsConfiguration {
   private File annotationsLib;
   private File fbContrib;
   private File findSecBugs;
+  private File lpSecBugs;
 
   public void copyLibs() {
     if (jsr305Lib == null) {
@@ -248,6 +249,9 @@ public class FindbugsConfiguration {
     }
     if (findSecBugs == null) {
       findSecBugs = copyLib("/findsecbugs-plugin.jar");
+    }
+    if (lpSecBugs == null){
+      lpSecBugs = copyLib("/lp-sec-plugin.jar");
     }
   }
 
@@ -268,6 +272,10 @@ public class FindbugsConfiguration {
 
     if (findSecBugs != null) {
       findSecBugs.delete();
+    }
+
+    if (lpSecBugs != null){
+      lpSecBugs.delete();
     }
   }
 
@@ -293,6 +301,10 @@ public class FindbugsConfiguration {
 
   public File getFindSecBugsJar() {
     return findSecBugs;
+  }
+
+  public File getLpSecBugsJar(){
+    return lpSecBugs;
   }
 
   public static List<PropertyDefinition> getPropertyDefinitions() {

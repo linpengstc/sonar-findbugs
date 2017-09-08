@@ -132,6 +132,9 @@ valid active session IDs, allowing an insider to hijack any sessions whose IDs h
     <tag>cwe</tag>
     <tag>security</tag>
   </rule>
+
+
+
   <rule key='SERVLET_QUERY_STRING' priority='INFO'>
     <name>Security - Untrusted query string</name>
     <configKey>SERVLET_QUERY_STRING</configKey>
